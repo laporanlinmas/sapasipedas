@@ -76,7 +76,7 @@ export default function VideoSection() {
                   {/* Filename */}
                   <span className="flex-1 min-w-0 text-slate-400 text-[11px] font-medium flex items-center gap-1.5 ml-1.5">
                     <i className="ph-fill ph-youtube-logo text-slate-300 shrink-0" />
-                    <span className="truncate">Profil_Pedestrian.mp4</span>
+                    <span className="truncate">Profil Satgas Linmas Pedestrian</span>
                   </span>
                   {/* Quality badge */}
                   <span className="shrink-0 flex items-center gap-1 bg-white/10 px-1.5 py-0.5 rounded text-emerald-400 text-[10px] font-bold tracking-wide">
