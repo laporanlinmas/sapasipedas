@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-const DRIVE_FILE_ID = '1-GyXFy3i9_zL97uSs-zd20AYUEPL7iJM';
+const YOUTUBE_ID = 'idrySoqUxXw';
 
 const FEATURES = [
   { icon: 'ph-path',         label: 'Jalur pemandu (guiding block) khusus disabilitas' },
@@ -75,7 +75,7 @@ export default function VideoSection() {
                   </div>
                   {/* Filename */}
                   <span className="flex-1 min-w-0 text-slate-400 text-[11px] font-medium flex items-center gap-1.5 ml-1.5">
-                    <i className="ph-fill ph-film-strip text-slate-300 shrink-0" />
+                    <i className="ph-fill ph-youtube-logo text-slate-300 shrink-0" />
                     <span className="truncate">Profil_Pedestrian.mp4</span>
                   </span>
                   {/* Quality badge */}
@@ -93,39 +93,19 @@ export default function VideoSection() {
                   {/* Loading shimmer */}
                   {!loaded && (
                     <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-slate-900 z-20">
-                      <div className="w-12 h-12 rounded-full border-4 border-blue-500/30 border-t-blue-500 animate-spin" />
-                      <span className="text-slate-400 text-xs font-medium">Memuat video...</span>
+                      <div className="w-12 h-12 rounded-full border-4 border-red-600/30 border-t-red-600 animate-spin" />
+                      <span className="text-slate-400 text-xs font-medium">Memuat YouTube...</span>
                     </div>
                   )}
 
                   <iframe
-                    src={`https://drive.google.com/file/d/${DRIVE_FILE_ID}/preview`}
+                    src={`https://www.youtube.com/embed/${YOUTUBE_ID}?autoplay=0&rel=0&modestbranding=1`}
                     className="absolute inset-0 w-full h-full border-0"
-                    allow="autoplay; encrypted-media; picture-in-picture"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
                     loading="lazy"
-                    title="Profil Kawasan Pedestrian Ponorogo"
-                    sandbox="allow-scripts allow-same-origin allow-presentation allow-popups"
+                    title="Profil Kawasan Pedestrian Ponorogo (YouTube)"
                     onLoad={() => setLoaded(true)}
-                  />
-
-                  {/* Blokir pojok kanan atas (tombol Pop-out Drive) */}
-                  <div
-                    className="absolute top-0 right-0 w-28 h-10 bg-slate-950 z-10"
-                    aria-hidden="true"
-                    style={{ pointerEvents: 'all' }}
-                  />
-                  {/* Blokir pojok kanan bawah (tombol Buka di Drive) */}
-                  <div
-                    className="absolute bottom-0 right-0 w-28 h-10 bg-slate-950 z-10"
-                    aria-hidden="true"
-                    style={{ pointerEvents: 'all' }}
-                  />
-                  {/* Blokir klik kanan */}
-                  <div
-                    className="absolute inset-0 z-[5]"
-                    aria-hidden="true"
-                    onContextMenu={(e) => e.preventDefault()}
-                    style={{ pointerEvents: 'none' }}
                   />
                 </div>
 
