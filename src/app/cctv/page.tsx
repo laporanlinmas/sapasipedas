@@ -33,27 +33,33 @@ export default function CCTVPage() {
   const [showAll, setShowAll] = useState(false);
   const [selectedCCTV, setSelectedCCTV] = useState<CCTVData | null>(null);
   
-  // State grid terpisah untuk mobile dan desktop
+  // STATE ANIMASI TRANSISI HALAMAN
+  const [isMounted, setIsMounted] = useState(false);
+  
   const [mobileCols, setMobileCols] = useState<1 | 2>(1);
   const [desktopCols, setDesktopCols] = useState<2 | 4>(4);
 
   useEffect(() => {
+    // Memicu animasi setelah komponen dimuat
+    setIsMounted(true);
+    
     setCurrentTime(getCurrentTime());
     const interval = setInterval(() => setCurrentTime(getCurrentTime()), 1000);
     return () => clearInterval(interval);
   }, []);
 
-  // Menentukan jumlah data yang dirender
   const displayedCCTVs = showAll ? cctvData : cctvData.slice(0, 4);
 
-  // Class grid yang responsif
   const gridClasses = `grid gap-3 sm:gap-6 transition-all duration-500
     ${mobileCols === 1 ? 'grid-cols-1' : 'grid-cols-2'} 
     ${desktopCols === 2 ? 'md:grid-cols-2' : 'md:grid-cols-2 lg:grid-cols-4'}
   `;
 
   return (
-    <main className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col font-sans relative">
+    // WRAPPER ANIMASI: opacity dan transform menyesuaikan state isMounted
+    <main className={`min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col font-sans relative transition-all duration-700 ease-out transform ${
+      isMounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+    }`}>
       {/* ── Top Bar ── */}
       <header className="sticky top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800 px-3 sm:px-6 py-3 sm:py-4 shadow-sm">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
@@ -62,10 +68,10 @@ export default function CCTVPage() {
           <div className="flex items-center gap-3 w-full sm:w-auto">
             <Link 
               href="/#cctv"
-              className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 transition-colors shrink-0 shadow-sm"
+              className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 transition-all hover:-translate-x-1 shrink-0 shadow-sm group"
               title="Kembali"
             >
-              <i className="ph-bold ph-arrow-left text-base sm:text-lg" />
+              <i className="ph-bold ph-arrow-left text-base sm:text-lg group-hover:text-blue-500 transition-colors" />
             </Link>
             <div className="flex-1 overflow-hidden">
               <h1 className="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white flex items-center gap-2 tracking-tight truncate">
@@ -83,59 +89,41 @@ export default function CCTVPage() {
 
           {/* Kontrol Kanan */}
           <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-between sm:justify-end">
-            
-            {/* Grid Mobile */}
             <div className="flex sm:hidden bg-slate-200/70 dark:bg-slate-800 p-1 rounded-lg shadow-inner">
-              <button 
-                onClick={() => setMobileCols(1)}
-                className={`px-2.5 py-1.5 rounded-md text-[10px] font-bold transition-all flex items-center gap-1 ${mobileCols === 1 ? 'bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm' : 'text-slate-500 dark:text-slate-400'}`}
-              >
-                <i className="ph-fill ph-square text-xs" />
-                1 Kolom
+              <button onClick={() => setMobileCols(1)} className={`px-2.5 py-1.5 rounded-md text-[10px] font-bold transition-all flex items-center gap-1 ${mobileCols === 1 ? 'bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm' : 'text-slate-500 dark:text-slate-400'}`}>
+                <i className="ph-fill ph-square text-xs" /> 1 Kolom
               </button>
-              <button 
-                onClick={() => setMobileCols(2)}
-                className={`px-2.5 py-1.5 rounded-md text-[10px] font-bold transition-all flex items-center gap-1 ${mobileCols === 2 ? 'bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm' : 'text-slate-500 dark:text-slate-400'}`}
-              >
-                <i className="ph-fill ph-columns text-xs" />
-                2 Kolom
+              <button onClick={() => setMobileCols(2)} className={`px-2.5 py-1.5 rounded-md text-[10px] font-bold transition-all flex items-center gap-1 ${mobileCols === 2 ? 'bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm' : 'text-slate-500 dark:text-slate-400'}`}>
+                <i className="ph-fill ph-columns text-xs" /> 2 Kolom
               </button>
             </div>
-
-            {/* Grid Desktop */}
             <div className="hidden sm:flex bg-slate-200/70 dark:bg-slate-800 p-1 rounded-xl shadow-inner">
-              <button 
-                onClick={() => setDesktopCols(2)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${desktopCols === 2 ? 'bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300'}`}
-              >
-                <i className="ph-fill ph-squares-four text-sm" />
-                Grid 2
+              <button onClick={() => setDesktopCols(2)} className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${desktopCols === 2 ? 'bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300'}`}>
+                <i className="ph-fill ph-squares-four text-sm" /> Grid 2
               </button>
-              <button 
-                onClick={() => setDesktopCols(4)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${desktopCols === 4 ? 'bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300'}`}
-              >
-                <i className="ph-fill ph-grid-four text-sm" />
-                Grid 4
+              <button onClick={() => setDesktopCols(4)} className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${desktopCols === 4 ? 'bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300'}`}>
+                <i className="ph-fill ph-grid-four text-sm" /> Grid 4
               </button>
             </div>
-
-            {/* Indikator Waktu */}
             <div className="text-[10px] sm:text-xs font-mono font-bold bg-slate-900 text-emerald-400 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg border border-slate-700 shadow-inner min-w-[75px] sm:min-w-[100px] text-center shrink-0">
               {currentTime || '00:00:00'}
             </div>
           </div>
-
         </div>
       </header>
 
       {/* ── Grid Content ── */}
       <div className="p-3 sm:p-6 flex-1 overflow-auto w-full max-w-7xl mx-auto">
         <div className={gridClasses}>
-          {displayedCCTVs.map((cctv) => (
-            <div key={cctv.id} className="bg-white dark:bg-slate-900 rounded-xl sm:rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 border border-slate-200 dark:border-slate-800 flex flex-col group">
-              
-              {/* Header Card */}
+          {displayedCCTVs.map((cctv, index) => (
+            <div 
+              key={cctv.id} 
+              // Tambahkan delay animasi berjenjang berdasarkan index agar grid masuk satu per satu
+              className={`bg-white dark:bg-slate-900 rounded-xl sm:rounded-2xl overflow-hidden shadow-md hover:shadow-xl border border-slate-200 dark:border-slate-800 flex flex-col group transition-all duration-700 ease-out transform ${
+                isMounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+              }`}
+              style={{ transitionDelay: `${index * 50}ms` }}
+            >
               <div className="px-3 sm:px-4 py-2 sm:py-3 bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center transition-colors">
                 <div className="flex items-center gap-2 overflow-hidden mr-2">
                   <i className="ph-fill ph-video-camera text-blue-500 dark:text-blue-400 text-base sm:text-lg shrink-0" />
@@ -152,7 +140,6 @@ export default function CCTVPage() {
                 </div>
               </div>
 
-              {/* Video Player */}
               <div 
                 className="relative aspect-video bg-black w-full cursor-pointer overflow-hidden"
                 onClick={() => setSelectedCCTV(cctv)}
@@ -167,10 +154,7 @@ export default function CCTVPage() {
                   loading="lazy"
                   tabIndex={-1}
                 />
-                
-                {/* Overlay transparan agar card bisa di-klik & trigger hover efek */}
                 <div className="absolute inset-0 z-10 bg-transparent" />
-                
                 <div className="absolute inset-0 z-20 bg-slate-900/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
                   <div className="bg-white/95 dark:bg-slate-800/95 text-slate-900 dark:text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[10px] sm:text-xs font-bold flex items-center gap-1.5 shadow-xl transform translate-y-2 group-hover:translate-y-0 transition-all">
                     <i className="ph-bold ph-corners-out sm:text-base text-blue-600 dark:text-blue-400" />
@@ -182,9 +166,8 @@ export default function CCTVPage() {
           ))}
         </div>
 
-        {/* ── Tampilkan Lebih Banyak Section ── */}
         {!showAll && (
-          <div className="mt-8 sm:mt-12 mb-6 sm:mb-8 flex flex-col items-center justify-center animate-fade-in px-4">
+          <div className={`mt-8 sm:mt-12 mb-6 sm:mb-8 flex flex-col items-center justify-center transition-all duration-1000 delay-500 ${isMounted ? 'opacity-100' : 'opacity-0'}`}>
             <div className="relative w-full max-w-md flex items-center justify-center">
               <div className="absolute inset-0 flex items-center" aria-hidden="true">
                 <div className="w-full border-t border-slate-300 dark:border-slate-800"></div>
@@ -208,17 +191,16 @@ export default function CCTVPage() {
         )}
       </div>
 
-      {/* ── Modal Popup Video ── */}
+      {/* Modal Popup Video */}
       {selectedCCTV && (
         <div 
-          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-900/95 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-900/95 backdrop-blur-md transition-opacity duration-300"
           onClick={() => setSelectedCCTV(null)}
         >
           <div 
-            className="relative w-full max-w-5xl bg-black rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl border border-slate-700 flex flex-col transform transition-all scale-100"
+            className="relative w-full max-w-5xl bg-black rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl border border-slate-700 flex flex-col transform transition-all duration-300 scale-100 animate-[fadeIn_0.2s_ease-out]"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Modal Header */}
             <div className="flex items-center justify-between px-4 py-3 sm:py-4 bg-slate-900 border-b border-slate-800">
               <div className="flex items-center gap-3">
                 <div className="flex items-center gap-2 bg-red-900/40 px-2 py-1 rounded border border-red-500/50 shadow-sm shrink-0">
@@ -230,16 +212,10 @@ export default function CCTVPage() {
                   {selectedCCTV.loc}
                 </h3>
               </div>
-              <button 
-                onClick={() => setSelectedCCTV(null)} 
-                className="text-slate-400 hover:text-white bg-slate-800 hover:bg-slate-700 p-1.5 rounded-lg transition-colors ml-4 shrink-0"
-                aria-label="Tutup"
-              >
+              <button onClick={() => setSelectedCCTV(null)} className="text-slate-400 hover:text-white bg-slate-800 hover:bg-slate-700 p-1.5 rounded-lg transition-colors ml-4 shrink-0">
                 <i className="ph-bold ph-x text-base sm:text-lg" />
               </button>
             </div>
-            
-            {/* Modal Video Player (Autoplay dengan suara) */}
             <div className="relative aspect-video w-full bg-black">
               <iframe
                 src={`https://www.youtube.com/embed/${selectedCCTV.youtubeId}?autoplay=1&mute=0&rel=0&modestbranding=1`}
@@ -252,7 +228,6 @@ export default function CCTVPage() {
           </div>
         </div>
       )}
-
     </main>
   );
 }
