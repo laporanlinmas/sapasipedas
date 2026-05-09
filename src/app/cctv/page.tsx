@@ -10,18 +10,18 @@ interface CCTVData {
 }
 
 const cctvData: CCTVData[] = [
-  { loc: "Alun-Alun Timur",       id: "01", youtubeId: "1REI7RE3aVE" },
-  { loc: "Alun-Alun Barat",       id: "02", youtubeId: "T-kzxf03Phw" },
-  { loc: "HOS Cokroaminoto Utara",id: "03", youtubeId: "y3_Ch1mbTvI" },
-  { loc: "HOS Cokroaminoto Sel",  id: "04", youtubeId: "V9a2vVNBx2g" },
-  { loc: "Simpang Tiga Ngepos",   id: "05", youtubeId: "n7FLPsRLboI" },
-  { loc: "Jendral Sudirman",      id: "06", youtubeId: "TJSfMlqE9y8" },
-  { loc: "Gajah Mada Area",       id: "07", youtubeId: "FCuHGm6VMHs" },
-  { loc: "Simpang Pasar Legi",    id: "08", youtubeId: "fRBUPELdsjc" },
-  { loc: "Suromenggolo",          id: "09", youtubeId: "-CST_3we6gY" },
-  { loc: "Tambakbayan",           id: "10", youtubeId: "A2rdsNASVOk" },
-  { loc: "Batoro Katong",         id: "11", youtubeId: "BdPvBNLy5kc" },
-  { loc: "Simpang Jeruksing",     id: "12", youtubeId: "ghJg364QRkQ" },
+  { loc: "Simpang Tugu",               id: "01", youtubeId: "1v52cQ1qJBA" },
+  { loc: "Margo Utomo - Utara Teteg",  id: "02", youtubeId: "JUI1Wx4E25Q" },
+  { loc: "Simpang Borobudur Plaza",    id: "03", youtubeId: "FCuHGm6VMHs" },
+  { loc: "Margo Utomo - Selatan Olive",id: "04", youtubeId: "ijG22Q85GRg" },
+  { loc: "Margo Utomo - Optic Tugu",   id: "05", youtubeId: "ghJg364QRkQ" },
+  { loc: "Simpang Jati Kencana",       id: "06", youtubeId: "SDK-sOjzo1I" },
+  { loc: "Margo Utomo - Selatan Tugu", id: "07", youtubeId: "csO7IGlUaYI" },
+  { loc: "Titik Nol Kilometer",        id: "08", youtubeId: "p5fsOsGos6Y" },
+  { loc: "Alun-Alun Kidul",            id: "09", youtubeId: "4MdiRrgX6fk" },
+  { loc: "Stasiun Tugu / Malioboro",   id: "10", youtubeId: "NUpEhkmv-Oo" },
+  { loc: "Plaza Malioboro",            id: "11", youtubeId: "q7ZX2tSFEDg" },
+  { loc: "Gunung Merapi (Live)",       id: "12", youtubeId: "8X7gHBhD1Tw" },
 ];
 
 function getCurrentTime() {
@@ -76,7 +76,7 @@ export default function CCTVPage() {
             </button>
             <button 
               onClick={() => setGridColumns(4)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${gridColumns === 4 ? 'bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300'}`}
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all items-center gap-1.5 hidden sm:flex ${gridColumns === 4 ? 'bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm' : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300'}`}
             >
               <i className="ph-fill ph-grid-four text-sm" />
               Grid 4
@@ -91,7 +91,7 @@ export default function CCTVPage() {
 
       {/* ── Grid Content ── */}
       <div className="p-4 sm:p-6 flex-1 overflow-auto">
-        <div className={`grid gap-4 sm:gap-6 ${gridColumns === 2 ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'}`}>
+        <div className={`grid gap-4 sm:gap-6 ${gridColumns === 2 ? 'grid-cols-2 lg:grid-cols-2' : 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4'}`}>
           {cctvData.map((cctv) => (
             <div key={cctv.id} className="bg-slate-900 rounded-2xl overflow-hidden shadow-xl border border-slate-700 flex flex-col group">
               
