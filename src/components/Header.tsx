@@ -28,7 +28,7 @@ export default function Header() {
   }, []);
 
   const navItems = [
-    { id: 'cctv',      label: 'Live CCTV',   icon: 'ph-monitor-play',  color: 'text-blue-500' },
+    { id: 'cctv',      label: 'Live CCTV',  icon: 'ph-monitor-play',  color: 'text-blue-500' },
     { id: 'peta',      label: 'Pemetaan',     icon: 'ph-map-trifold',   color: 'text-indigo-500' },
     { id: 'pengaduan', label: 'Pengaduan',    icon: 'ph-megaphone',     color: 'text-orange-500' },
     { id: 'informasi', label: 'Info Program', icon: 'ph-info',          color: 'text-purple-500' },
@@ -54,21 +54,24 @@ export default function Header() {
             {/* Logo & Judul */}
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              className="flex items-center gap-2.5 group"
+              className="flex items-center gap-2.5 sm:gap-3 group"
               aria-label="Ke atas"
             >
               <div className="w-8 h-8 md:w-9 md:h-9 rounded-full bg-white/10 border border-white/25 flex items-center justify-center overflow-hidden group-hover:bg-white/20 transition-colors shrink-0">
                 <Image src="/assets/icon-full.png" alt="Icon" width={28} height={28} className="object-contain" priority />
               </div>
               
-              <div className="flex flex-col text-left justify-center">
-                {/* Desktop: SI-PEDAS (Kuning Emas, disembunyikan di layar kecil) */}
-                <span className="hidden sm:block text-[9px] font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-yellow-400 to-orange-400 tracking-[0.25em] mb-0.5">
+              <div className="flex items-center gap-2 sm:gap-2.5">
+                {/* SI-PEDAS (Putih di Light, Gradien Kuning di Dark) */}
+                <span className="text-[11px] sm:text-xs md:text-sm font-black text-white dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-r dark:from-yellow-300 dark:via-yellow-400 dark:to-orange-400 tracking-[0.15em] sm:tracking-[0.2em] uppercase whitespace-nowrap transition-colors duration-300">
                   SI-PEDAS
                 </span>
                 
-                {/* Semua Layar: SAPA PEDESTRIAN (Fokus utama, kapital, besar) */}
-                <span className="text-[15px] sm:text-base font-black text-white tracking-wide uppercase leading-none drop-shadow-sm">
+                {/* Garis Pemisah */}
+                <span className="w-px h-3 sm:h-4 bg-white/70 dark:bg-slate-600 rounded-full transition-colors duration-300" />
+                
+                {/* SAPA PEDESTRIAN (Putih di Light, Biru di Dark) */}
+                <span className="text-[11px] sm:text-xs md:text-sm font-extrabold text-white dark:text-blue-400 tracking-wide uppercase whitespace-nowrap transition-colors duration-300 drop-shadow-sm dark:drop-shadow-none">
                   SAPA PEDESTRIAN
                 </span>
               </div>
