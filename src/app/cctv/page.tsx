@@ -101,6 +101,18 @@ export default function CCTVPage() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  // LOGIKA KLIK VIDEO DI DASHBOARD BIASA
+  const handleVideoClick = (id: string) => {
+    // Jika di HP (lebar < 640px) dan Grid diatur 1, langsung buka mode Fullscreen Focus
+    if (window.innerWidth < 640 && mobileCols === 1) {
+      setFocusedFullscreenId(id);
+      setIsFullscreenMode(true);
+    } else {
+      // Jika di Desktop atau Mobile Grid 2, jalankan efek pembesaran biasa (in-place)
+      setExpandedId(id);
+    }
+  };
+
   return (
     <main className={`min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col font-sans relative transition-all duration-500 ease-out transform ${
       isMounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
@@ -128,7 +140,7 @@ export default function CCTVPage() {
               </p>
             </div>
             
-            {/* Tombol Tema (Mobile: Pindah ke Kiri agar rapi, Desktop: Kanan) */}
+            {/* Tombol Tema (Mobile) */}
             <button 
               onClick={toggleTheme}
               className="flex sm:hidden w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 items-center justify-center ml-auto shrink-0"
@@ -148,35 +160,40 @@ export default function CCTVPage() {
               {isDark ? <i className="ph-fill ph-sun text-base" /> : <i className="ph-fill ph-moon text-base" />}
             </button>
 
-            <button 
-              onClick={() => setIsFullscreenMode(true)}
-              className="bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-blue-600 dark:hover:bg-blue-50 px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-lg text-[9px] sm:text-xs font-bold transition-colors flex items-center gap-1 shadow-md shrink-0"
-            >
-              <i className="ph-bold ph-corners-out text-[10px] sm:text-sm" />
-              <span className="hidden sm:inline">Full Monitor</span>
-            </button>
+            {/* GRUP KONTROL: FULL MONITOR + GRID (Disatukan / Mepet Bareng) */}
+            <div className="flex items-center gap-1 sm:gap-1.5 shrink-0">
+              
+              <button 
+                onClick={() => setIsFullscreenMode(true)}
+                className="bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-blue-600 dark:hover:bg-blue-50 px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-md sm:rounded-lg text-[9px] sm:text-xs font-bold transition-colors flex items-center gap-1 shadow-sm sm:shadow-md"
+              >
+                <i className="ph-bold ph-corners-out text-[10px] sm:text-sm" />
+                <span className="hidden sm:inline">Full Monitor</span>
+              </button>
 
-            {/* Grid Kontrol Mobile */}
-            <div className="flex sm:hidden bg-slate-200/70 dark:bg-slate-800/80 p-0.5 rounded-md shadow-inner shrink-0">
-              <button onClick={() => setMobileCols(1)} className={`px-2 py-1 rounded text-[9px] font-bold transition-all ${mobileCols === 1 ? 'bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm' : 'text-slate-500'}`}>
-                1K
-              </button>
-              <button onClick={() => setMobileCols(2)} className={`px-2 py-1 rounded text-[9px] font-bold transition-all ${mobileCols === 2 ? 'bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm' : 'text-slate-500'}`}>
-                2K
-              </button>
-            </div>
-            
-            {/* Grid Kontrol Desktop */}
-            <div className="hidden sm:flex bg-slate-200/70 dark:bg-slate-800 p-1 rounded-lg shadow-inner shrink-0">
-              <button onClick={() => setDesktopCols(2)} className={`px-3 py-1.5 rounded-md text-xs font-bold transition-all ${desktopCols === 2 ? 'bg-white dark:bg-slate-700 text-blue-600 shadow-sm' : 'text-slate-500'}`}>
-                Grid 2
-              </button>
-              <button onClick={() => setDesktopCols(4)} className={`px-3 py-1.5 rounded-md text-xs font-bold transition-all ${desktopCols === 4 ? 'bg-white dark:bg-slate-700 text-blue-600 shadow-sm' : 'text-slate-500'}`}>
-                Grid 4
-              </button>
+              {/* Grid Kontrol Mobile */}
+              <div className="flex sm:hidden bg-slate-200/80 dark:bg-slate-800/80 p-0.5 rounded-md shadow-inner">
+                <button onClick={() => setMobileCols(1)} className={`px-2 py-1.5 rounded text-[9px] font-bold transition-all ${mobileCols === 1 ? 'bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm' : 'text-slate-500'}`}>
+                  1 Grid
+                </button>
+                <button onClick={() => setMobileCols(2)} className={`px-2 py-1.5 rounded text-[9px] font-bold transition-all ${mobileCols === 2 ? 'bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm' : 'text-slate-500'}`}>
+                  2 Grid
+                </button>
+              </div>
+              
+              {/* Grid Kontrol Desktop */}
+              <div className="hidden sm:flex bg-slate-200/80 dark:bg-slate-800/80 p-1 rounded-lg shadow-inner">
+                <button onClick={() => setDesktopCols(2)} className={`px-3 py-1.5 rounded-md text-xs font-bold transition-all ${desktopCols === 2 ? 'bg-white dark:bg-slate-700 text-blue-600 shadow-sm' : 'text-slate-500'}`}>
+                  Grid 2
+                </button>
+                <button onClick={() => setDesktopCols(4)} className={`px-3 py-1.5 rounded-md text-xs font-bold transition-all ${desktopCols === 4 ? 'bg-white dark:bg-slate-700 text-blue-600 shadow-sm' : 'text-slate-500'}`}>
+                  Grid 4
+                </button>
+              </div>
+
             </div>
 
-            <div className="text-[9px] sm:text-xs font-mono font-bold bg-slate-100 dark:bg-slate-900 text-emerald-600 dark:text-emerald-400 px-2 py-1.5 sm:px-3 sm:py-2 rounded-lg min-w-[55px] sm:min-w-[70px] text-center border border-slate-200 dark:border-slate-700 shrink-0">
+            <div className="text-[9px] sm:text-xs font-mono font-bold bg-slate-100 dark:bg-slate-900 text-emerald-600 dark:text-emerald-400 px-2 py-1.5 sm:px-3 sm:py-2 rounded-md sm:rounded-lg min-w-[55px] sm:min-w-[70px] text-center border border-slate-200 dark:border-slate-700 shrink-0">
               {currentTime}
             </div>
           </div>
@@ -204,7 +221,7 @@ export default function CCTVPage() {
                 </div>
 
                 <div className={`relative bg-black w-full overflow-hidden transition-all duration-300 ${isExpanded ? 'h-full min-h-[200px] sm:min-h-[300px]' : 'aspect-video'}`}>
-                  {/* Efisiensi RAM: Hanya render iframe jika di-expand atau showAll active / di dalam 4 array pertama */}
+                  {/* Efisiensi RAM: Membatasi iframe yang diproses memori */}
                   <iframe 
                     src={`https://www.youtube.com/embed/${cctv.youtubeId}?autoplay=1&mute=1&rel=0&modestbranding=1`} 
                     className="absolute inset-0 w-full h-full border-0" 
@@ -215,10 +232,11 @@ export default function CCTVPage() {
                   
                   {!isExpanded ? (
                     <>
-                      <div className="absolute inset-0 z-10 cursor-pointer" onClick={() => setExpandedId(cctv.id)} />
+                      <div className="absolute inset-0 z-10 cursor-pointer" onClick={() => handleVideoClick(cctv.id)} />
                       <div className="absolute inset-0 z-20 bg-slate-900/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity pointer-events-none">
-                        <div className="bg-white text-slate-900 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full text-[9px] sm:text-[10px] font-bold flex items-center gap-1">
-                          <i className="ph-bold ph-corners-out" /> Perbesar
+                        <div className="bg-white text-slate-900 px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full text-[9px] sm:text-[10px] font-bold flex items-center gap-1 shadow-lg">
+                          <i className="ph-bold ph-corners-out" />
+                          <span>{mobileCols === 1 ? 'Buka CCTV' : 'Perbesar'}</span>
                         </div>
                       </div>
                     </>
