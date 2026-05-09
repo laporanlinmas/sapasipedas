@@ -2,8 +2,8 @@ import Image from 'next/image';
 
 export default function Hero() {
   return (
-    // Padding pt-20 dan pb-8 (sebelumnya pt-36 pb-16) agar jauh lebih ringkas dan hemat tempat
-    <header className="pt-20 pb-8 md:pt-28 md:pb-12 relative overflow-hidden">
+    // Padding atas ditambah (pt-28/pt-36), padding bawah dikurangi ekstrim (pb-4/pb-8) agar lebih menempel ke konten bawahnya
+    <header className="pt-28 pb-4 md:pt-36 md:pb-8 relative overflow-hidden">
 
       {/* Decorative floating orbs */}
       <div
@@ -19,7 +19,7 @@ export default function Hero() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center relative z-10">
 
-        {/* Logo - Diperkecil sedikit agar menghemat ruang vertikal */}
+        {/* Logo */}
         <div className="flex justify-center mb-5">
           <div className="relative group">
             <div className="absolute -inset-2 rounded-3xl bg-gradient-to-br from-blue-500/20 to-orange-500/20 blur-lg pointer-events-none animate-pulse" />
@@ -54,17 +54,17 @@ export default function Hero() {
         </h1>
 
         {/* Description - Margin bottom dikurangi */}
-        <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed font-medium mb-8 px-2">
+        <p className="text-sm md:text-base text-slate-600 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed font-medium mb-6 px-2">
           Sistem terpadu untuk <strong className="text-blue-600 dark:text-blue-400">pemantauan CCTV real-time</strong>, pemetaan kawasan, 
           analisis <strong className="text-orange-500 dark:text-orange-400">zona kerawanan</strong>, dan respon cepat 
           terhadap pengaduan masyarakat di kawasan pedestrian Ponorogo.
         </p>
 
         {/* Quick-stat pills 
-            - flex-nowrap & overflow-x-auto memastikan konten tetap menyamping di mobile (swipeable)
-            - [scrollbar-width:none] menyembunyikan garis scroll agar UI tetap clean
+            - grid grid-cols-2: Mengubah tata letak menjadi 2 kolom di mobile (2 atas, 2 bawah)
+            - md:flex md:flex-wrap md:justify-center: Mengembalikan layout menyamping di layar desktop
         */}
-        <div className="flex flex-nowrap md:flex-wrap justify-start md:justify-center gap-2 md:gap-4 w-full overflow-x-auto md:overflow-x-visible pb-2 md:pb-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden snap-x snap-mandatory px-1">
+        <div className="grid grid-cols-2 md:flex md:flex-wrap md:justify-center gap-2 md:gap-4 w-full max-w-4xl mx-auto px-1 md:px-0">
           {[
             { icon: 'ph-video-camera', title: 'CCTV Real-time', desc: 'Pemantauan Aktif', color: 'text-blue-600 dark:text-blue-400', bg: 'bg-blue-50 dark:bg-blue-900/30', border: 'border-blue-200 dark:border-blue-800/40' },
             { icon: 'ph-map-trifold', title: 'Pemetaan Kawasan', desc: 'Monitoring Spasial', color: 'text-indigo-600 dark:text-indigo-400', bg: 'bg-indigo-50 dark:bg-indigo-900/30', border: 'border-indigo-200 dark:border-indigo-800/40' },
@@ -73,15 +73,16 @@ export default function Hero() {
           ].map(({ icon, title, desc, color, bg, border }) => (
             <div
               key={title}
-              // shrink-0 agar tidak menyusut paksa, padding (px, py) dibuat kecil (kecil-kecil aja)
-              className={`shrink-0 snap-center flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full border ${bg} ${border} hover:scale-105 transition-transform duration-200 cursor-default select-none shadow-sm`}
+              // Di mobile padding diperkecil (px-2 py-1.5), sudut jadi rounded-xl (agar teks tidak terpotong lengkungan)
+              className={`flex items-center gap-1.5 md:gap-2 px-2 py-1.5 md:px-4 md:py-2 rounded-xl md:rounded-full border ${bg} ${border} hover:scale-105 transition-transform duration-200 cursor-default select-none shadow-sm`}
             >
-              <i className={`ph-fill ${icon} text-base md:text-xl ${color}`} />
-              <div className="text-left flex flex-col justify-center">
-                <span className={`text-[11px] md:text-sm font-bold ${color} leading-none mb-0.5 md:mb-1`}>
+              <i className={`ph-fill ${icon} text-sm md:text-xl shrink-0 ${color}`} />
+              <div className="text-left flex flex-col justify-center min-w-0">
+                {/* Ukuran teks sangat kecil di mobile (text-[9px] dan text-[7px]), tapi aman dibaca karena layout rapi */}
+                <span className={`text-[9px] md:text-sm font-bold ${color} leading-tight md:leading-none md:mb-1 truncate`}>
                   {title}
                 </span>
-                <span className="text-[8px] md:text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest leading-none">
+                <span className="text-[7px] md:text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest leading-none truncate">
                   {desc}
                 </span>
               </div>
