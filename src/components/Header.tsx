@@ -51,20 +51,27 @@ export default function Header() {
             transition-shadow duration-300
           `}>
 
-            {/* Logo */}
+            {/* Logo & Judul */}
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
               className="flex items-center gap-2.5 group"
               aria-label="Ke atas"
             >
-              <div className="w-9 h-9 rounded-full bg-white/10 border border-white/25 flex items-center justify-center overflow-hidden group-hover:bg-white/20 transition-colors shrink-0">
-                <Image src="/assets/icon-full.png" alt="SIPEDAS" width={28} height={28} className="object-contain" priority />
+              <div className="w-8 h-8 md:w-9 md:h-9 rounded-full bg-white/10 border border-white/25 flex items-center justify-center overflow-hidden group-hover:bg-white/20 transition-colors shrink-0">
+                <Image src="/assets/icon-full.png" alt="Icon" width={28} height={28} className="object-contain" priority />
               </div>
-              <div className="hidden sm:flex flex-col leading-none">
-                <span className="text-sm font-extrabold text-white tracking-wide">SIPEDAS</span>
-                <span className="text-[9px] font-semibold text-white/70 tracking-widest uppercase">Sapa Pedestrian</span>
+              
+              <div className="flex flex-col text-left justify-center">
+                {/* Desktop: SI-PEDAS (Kuning Emas, disembunyikan di layar kecil) */}
+                <span className="hidden sm:block text-[9px] font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-yellow-400 to-orange-400 tracking-[0.25em] mb-0.5">
+                  SI-PEDAS
+                </span>
+                
+                {/* Semua Layar: SAPA PEDESTRIAN (Fokus utama, kapital, besar) */}
+                <span className="text-[15px] sm:text-base font-black text-white tracking-wide uppercase leading-none drop-shadow-sm">
+                  SAPA PEDESTRIAN
+                </span>
               </div>
-              <span className="sm:hidden text-base font-extrabold text-white tracking-wide">SIPEDAS</span>
             </button>
 
             {/* Desktop nav */}
