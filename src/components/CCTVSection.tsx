@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 
 interface CCTVData {
   loc: string;
@@ -75,10 +76,20 @@ export default function CCTVSection() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-        {cctvData.map((cctv, index) => (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        {cctvData.slice(0, 4).map((cctv, index) => (
           <CCTVCard key={cctv.id} cctv={cctv} currentTime={currentTime} index={index} />
         ))}
+      </div>
+
+      <div className="mt-8 flex justify-center">
+        <Link 
+          href="/cctv"
+          className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-3.5 rounded-full font-bold shadow-lg shadow-blue-500/30 transition-transform duration-300 hover:scale-105 hover:shadow-blue-500/50"
+        >
+          <i className="ph-fill ph-squares-four text-xl" />
+          Lihat Selengkapnya (12 Titik)
+        </Link>
       </div>
     </section>
   );
@@ -136,12 +147,12 @@ function CCTVCard({ cctv, currentTime, index }: { cctv: CCTVData; currentTime: s
         </div>
 
         {/* Hover overlay */}
-        <div className="absolute inset-0 bg-blue-900/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center cursor-pointer z-30 backdrop-blur-[2px]">
+        <Link href="/cctv" className="absolute inset-0 bg-blue-900/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center cursor-pointer z-30 backdrop-blur-[2px]">
           <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-md border border-white/40 mb-2 transform scale-50 group-hover:scale-100 transition-transform duration-500 delay-100">
             <i className="ph-fill ph-play text-2xl text-white ml-1" />
           </div>
-          <span className="text-white text-xs font-bold tracking-wider transform translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-200">PERBESAR</span>
-        </div>
+          <span className="text-white text-xs font-bold tracking-wider transform translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500 delay-200">BUKA DASHBOARD</span>
+        </Link>
       </div>
 
       <div className="p-4 flex justify-between items-center group-hover:bg-blue-50/50 dark:group-hover:bg-slate-700/80 transition-colors">
